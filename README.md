@@ -1,9 +1,9 @@
 # Backend Impacto
 
 ## Sobre
-Nesse repositório se encontra da API do projeto
+Nesse repositório se encontra a API de cadastros de usuários e ONGs
 
 ## Tecnologias utilizadas:
 
 - Java + Spring boot;
-- Bande de dados relacional -> MySQL;
+- Banco de dados relacional -> MySQL;
