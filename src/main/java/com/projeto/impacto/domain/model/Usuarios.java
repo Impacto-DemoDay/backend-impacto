@@ -3,7 +3,6 @@ package com.projeto.impacto.domain.model;
 import java.sql.Date;
 import java.time.ZonedDateTime;
 import java.util.Collection;
-
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import jakarta.persistence.*;
