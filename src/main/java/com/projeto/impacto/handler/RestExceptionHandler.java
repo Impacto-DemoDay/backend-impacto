@@ -18,7 +18,7 @@ public class RestExceptionHandler {
     public ResponseEntity<ErrorResponse> handlerRequestException(Exception ex){
         String dataHoraLocal = FormatDataHora.FormatDateParaDataHora(new Date());
 
-        ErrorResponse erro = new ErrorResponse(dataHoraLocal, "INTERNAL SERVER ERROR", HttpStatus.INTERNAL_SERVER_ERROR.value(), ex.getMessage());
+        ErrorResponse erro = new ErrorResponse(dataHoraLocal, "Sorry, INTERNAL SERVER ERROR ;(", HttpStatus.INTERNAL_SERVER_ERROR.value(), ex.getMessage());
 
         return new ResponseEntity<>(erro, HttpStatus.INTERNAL_SERVER_ERROR);
     }
@@ -28,7 +28,7 @@ public class RestExceptionHandler {
     public ResponseEntity<ErrorResponse> handlerResourceNotFoundException(ResourceNotFoundException ex){
         String dataHoraLocal = FormatDataHora.FormatDateParaDataHora(new Date());
 
-        ErrorResponse erro = new ErrorResponse(dataHoraLocal, "Página Não Encontrada :(", HttpStatus.NOT_FOUND.value(), ex.getMessage());
+        ErrorResponse erro = new ErrorResponse(dataHoraLocal, "NOT FOUND :(", HttpStatus.NOT_FOUND.value(), ex.getMessage());
 
         return new ResponseEntity<>(erro, HttpStatus.NOT_FOUND);
     }
@@ -38,7 +38,7 @@ public class RestExceptionHandler {
     public ResponseEntity<ErrorResponse> handlerResourceBadRequestException(ResourceBadRequestException ex){
         String dataHoraLocal = FormatDataHora.FormatDateParaDataHora(new Date());
 
-        ErrorResponse erro = new ErrorResponse(dataHoraLocal, "Bad Request", HttpStatus.BAD_REQUEST.value(), ex.getMessage());
+        ErrorResponse erro = new ErrorResponse(dataHoraLocal, "BAD RESQUEST", HttpStatus.BAD_REQUEST.value(), ex.getMessage());
 
         return new ResponseEntity<>(erro, HttpStatus.BAD_REQUEST);
     }

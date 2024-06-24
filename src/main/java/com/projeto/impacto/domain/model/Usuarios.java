@@ -178,4 +178,16 @@ public class Usuarios implements UserDetails{
     public boolean isEnabled () {
         return true;
     }
+    public static void setId(int id) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'setId'");
+    }
+    public void setDataCadastro(java.util.Date date) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'setDataCadastro'");
+    }
+    public void setId(Object object) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'setId'");
+    }
 }
