@@ -6,7 +6,6 @@ public class ErrorResponse {
     private int Status;
     private String Descrição;
 
-    //Construtor
     public ErrorResponse(String dataHora, String titulo, int status, String descrição) {
         DataHora = dataHora;
         Titulo = titulo;

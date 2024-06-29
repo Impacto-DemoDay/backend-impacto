@@ -1,51 +1,45 @@
 package com.projeto.impacto.domain.model;
 
-import java.math.BigDecimal;
 import java.time.ZonedDateTime;
+
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "doacoes")
 public class Doacoes {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_doacoes", unique = true, nullable = false)
-    private int idDoacoes;
+    @Column(name = "id_doacoes", nullable = false, unique = true)
+    int id;
 
-    @Column(nullable = false)
-    private BigDecimal valor;
+    int valor;
 
-    private String motivo;
+    String motivo;
 
-    @Column(name = "data_doacao", nullable = false)
-    private ZonedDateTime dataDoacao = ZonedDateTime.now();
+    ZonedDateTime dataDoacao = ZonedDateTime.now();
 
-    @Column(name = "analise_pagamento", nullable = false)
-    private boolean analisePagamento = false;
+    @Column(name = "analise_pagamento")
+    boolean analisePagamento = false;
 
+    //Relacionamento entre usuarios e doações
     @ManyToOne
-    @JoinColumn(name = "id_usuarios", nullable = false)
+    @JoinColumn(name = "usuarios_id")
     private Usuarios usuarios;
 
-    @ManyToOne
-    @JoinColumn(name = "id_ongs", nullable = false)
-    private Ongs ongs;
-
-
-    public int getIdDoacoes() {
-        return idDoacoes;
+    //Getters e Setters
+    public int getId() {
+        return id;
     }
 
-    public void setIdDoacoes(int idDoacoes) {
-        this.idDoacoes = idDoacoes;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public BigDecimal getValor() {
+    public int getValor() {
         return valor;
     }
 
-    public void setValor(BigDecimal valor) {
+    public void setValor(int valor) {
         this.valor = valor;
     }
 
@@ -72,20 +66,4 @@ public class Doacoes {
     public void setAnalisePagamento(boolean analisePagamento) {
         this.analisePagamento = analisePagamento;
     }
-
-    public Usuarios getUsuarios() {
-        return usuarios;
-    }
-
-    public void setUsuarios(Usuarios usuarios) {
-        this.usuarios = usuarios;
-    }
-
-    public Ongs getOngs() {
-        return ongs;
-    }
-
-    public void setOngs(Ongs ongs) {
-        this.ongs = ongs;
-    }    
 }

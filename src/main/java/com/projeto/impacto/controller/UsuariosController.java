@@ -1,56 +1,75 @@
 package com.projeto.impacto.controller;
 
-//import org.hibernate.mapping.List;
-import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.projeto.impacto.domain.model.Usuarios;
 import com.projeto.impacto.domain.service.UsuariosService;
-import com.projeto.impacto.dto.usuarios.UsuariosRequestDTO;
-import com.projeto.impacto.dto.usuarios.UsuariosResponseDTO;
-//import jakarta.websocket.server.PathParam;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
-@CrossOrigin("*")
+import java.util.List;
+import java.util.Optional;
+
 @RestController
 @RequestMapping("/api/usuarios")
 public class UsuariosController {
+
     @Autowired
     private UsuariosService usuariosService;
 
     @GetMapping
-    private ResponseEntity<List<UsuariosResponseDTO>> obterTodos(){
-        return ResponseEntity.ok(usuariosService.obterTodos());
+    public List<Usuarios> getAllUsuarios() {
+        return usuariosService.findAll();
     }
-
-    @GetMapping("/id")
-    private ResponseEntity<UsuariosResponseDTO> obterPorId(@PathVariable int id){
-        return ResponseEntity.ok(usuariosService.obterPorId(id));
+    
+    @GetMapping("/{id}")
+    public ResponseEntity<Usuarios> getUsuarioById(@PathVariable int id) {
+        Optional<Usuarios> usuario = usuariosService.findById(id);
+        if (usuario.isPresent()) {
+            return ResponseEntity.ok(usuario.get());
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @PostMapping
-    public ResponseEntity<UsuariosResponseDTO> cadastrar(@RequestBody UsuariosRequestDTO dto) {
-        UsuariosResponseDTO usuario = usuariosService.cadastrar(dto);
-        return new ResponseEntity<>(usuario, HttpStatus.CREATED);
+    public Usuarios createUsuario(@RequestBody Usuarios usuario) {
+        return usuariosService.save(usuario);
     }
-    
+
     @PutMapping("/{id}")
-    public ResponseEntity<UsuariosResponseDTO> atualizar(@PathVariable int id, @RequestBody UsuariosRequestDTO dto) {
-        UsuariosResponseDTO usuario = usuariosService.atualizar(id, dto);
-        return ResponseEntity.ok(usuario);
+    public ResponseEntity<Usuarios> updateUsuario(@PathVariable int id, @RequestBody Usuarios usuarioDetails) {
+        Optional<Usuarios> usuario = usuariosService.findById(id);
+        if (usuario.isPresent()) {
+            Usuarios updatedUsuario = usuario.get();
+            updatedUsuario.setNome(usuarioDetails.getNome());
+            updatedUsuario.setCpf(usuarioDetails.getCpf());
+            updatedUsuario.setDataNascimento(usuarioDetails.getDataNascimento());
+            updatedUsuario.setEmail(usuarioDetails.getEmail());
+            updatedUsuario.setSenha(usuarioDetails.getSenha());
+            updatedUsuario.setTelefone(usuarioDetails.getTelefone());
+            updatedUsuario.setTelefoneReserva(usuarioDetails.getTelefoneReserva());
+            updatedUsuario.setCadastradoEm(usuarioDetails.getCadastradoEm());
+            updatedUsuario.setAtualizadoEm(usuarioDetails.getAtualizadoEm());
+            updatedUsuario.setPontos(usuarioDetails.getPontos());
+            updatedUsuario.setGenero(usuarioDetails.getGenero());
+            updatedUsuario.setInteresses(usuarioDetails.getInteresses());
+            updatedUsuario.setStatusConta(usuarioDetails.getStatusConta());
+            updatedUsuario.setDoacoes(usuarioDetails.getDoacoes());
+
+            return ResponseEntity.ok(usuariosService.save(updatedUsuario));
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deletar(@PathVariable int id){
-        usuariosService.deletar(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    public ResponseEntity<Void> deleteUsuario(@PathVariable int id) {
+        Optional<Usuarios> usuario = usuariosService.findById(id);
+        if (usuario.isPresent()) {
+            usuariosService.deleteById(id);
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 }
